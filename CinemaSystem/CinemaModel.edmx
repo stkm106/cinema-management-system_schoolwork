@@ -1,0 +1,321 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CinemaManagementDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbLichChieu">
+          <Key>
+            <PropertyRef Name="MaLich" />
+          </Key>
+          <Property Name="MaLich" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaPhim" Type="int" />
+          <Property Name="MaPhong" Type="int" />
+          <Property Name="NgayChieu" Type="date" />
+          <Property Name="GioChieu" Type="time" Precision="7" />
+          <Property Name="GiaVe" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="tbNguoiDung">
+          <Key>
+            <PropertyRef Name="MaND" />
+          </Key>
+          <Property Name="MaND" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HoTen" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SDT" Type="varchar" MaxLength="15" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Passwd" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Roles" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbPhim">
+          <Key>
+            <PropertyRef Name="MaPhim" />
+          </Key>
+          <Property Name="MaPhim" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenPhim" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="TheLoai" Type="nvarchar" MaxLength="100" />
+          <Property Name="ThoiLuong" Type="int" />
+          <Property Name="DaoDien" Type="nvarchar" MaxLength="100" />
+          <Property Name="NgayKhoiChieu" Type="date" />
+          <Property Name="Poster" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tbPhongChieu">
+          <Key>
+            <PropertyRef Name="MaPhong" />
+          </Key>
+          <Property Name="MaPhong" Type="int" Nullable="false" />
+          <Property Name="LoaiPhong" Type="nvarchar" MaxLength="50" />
+          <Property Name="SoGhe" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbVeXemPhim">
+          <Key>
+            <PropertyRef Name="MaVe" />
+          </Key>
+          <Property Name="MaVe" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaLich" Type="int" />
+          <Property Name="ViTriGhe" Type="nvarchar" MaxLength="10" />
+          <Property Name="NgayBan" Type="datetime" />
+          <Property Name="TongTien" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <Association Name="FK__tbLichChi__MaPhi__6FE99F9F">
+          <End Role="tbPhim" Type="Self.tbPhim" Multiplicity="0..1" />
+          <End Role="tbLichChieu" Type="Self.tbLichChieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbPhim">
+              <PropertyRef Name="MaPhim" />
+            </Principal>
+            <Dependent Role="tbLichChieu">
+              <PropertyRef Name="MaPhim" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbLichChi__MaPho__70DDC3D8">
+          <End Role="tbPhongChieu" Type="Self.tbPhongChieu" Multiplicity="0..1" />
+          <End Role="tbLichChieu" Type="Self.tbLichChieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbPhongChieu">
+              <PropertyRef Name="MaPhong" />
+            </Principal>
+            <Dependent Role="tbLichChieu">
+              <PropertyRef Name="MaPhong" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbVeXemPh__MaLic__03F0984C">
+          <End Role="tbLichChieu" Type="Self.tbLichChieu" Multiplicity="0..1" />
+          <End Role="tbVeXemPhim" Type="Self.tbVeXemPhim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbLichChieu">
+              <PropertyRef Name="MaLich" />
+            </Principal>
+            <Dependent Role="tbVeXemPhim">
+              <PropertyRef Name="MaLich" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CinemaManagementDBModelStoreContainer">
+          <EntitySet Name="tbLichChieu" EntityType="Self.tbLichChieu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbNguoiDung" EntityType="Self.tbNguoiDung" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbPhim" EntityType="Self.tbPhim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbPhongChieu" EntityType="Self.tbPhongChieu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbVeXemPhim" EntityType="Self.tbVeXemPhim" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__tbLichChi__MaPhi__6FE99F9F" Association="Self.FK__tbLichChi__MaPhi__6FE99F9F">
+            <End Role="tbPhim" EntitySet="tbPhim" />
+            <End Role="tbLichChieu" EntitySet="tbLichChieu" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbLichChi__MaPho__70DDC3D8" Association="Self.FK__tbLichChi__MaPho__70DDC3D8">
+            <End Role="tbPhongChieu" EntitySet="tbPhongChieu" />
+            <End Role="tbLichChieu" EntitySet="tbLichChieu" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbVeXemPh__MaLic__03F0984C" Association="Self.FK__tbVeXemPh__MaLic__03F0984C">
+            <End Role="tbLichChieu" EntitySet="tbLichChieu" />
+            <End Role="tbVeXemPhim" EntitySet="tbVeXemPhim" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CinemaManagementDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbNguoiDung">
+          <Key>
+            <PropertyRef Name="MaND" />
+          </Key>
+          <Property Name="MaND" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HoTen" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SDT" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Passwd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Roles" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="CinemaManagementDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbNguoiDungs" EntityType="Self.tbNguoiDung" />
+          <EntitySet Name="tbPhims" EntityType="CinemaManagementDBModel.tbPhim" />
+          <EntitySet Name="tbPhongChieux" EntityType="CinemaManagementDBModel.tbPhongChieu" />
+          <EntitySet Name="tbLichChieux" EntityType="CinemaManagementDBModel.tbLichChieu" />
+          <AssociationSet Name="FK__tbLichChi__MaPhi__6FE99F9F" Association="CinemaManagementDBModel.FK__tbLichChi__MaPhi__6FE99F9F">
+            <End Role="tbPhim" EntitySet="tbPhims" />
+            <End Role="tbLichChieu" EntitySet="tbLichChieux" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbLichChi__MaPho__70DDC3D8" Association="CinemaManagementDBModel.FK__tbLichChi__MaPho__70DDC3D8">
+            <End Role="tbPhongChieu" EntitySet="tbPhongChieux" />
+            <End Role="tbLichChieu" EntitySet="tbLichChieux" />
+          </AssociationSet>
+          <EntitySet Name="tbVeXemPhims" EntityType="CinemaManagementDBModel.tbVeXemPhim" />
+          <AssociationSet Name="FK__tbVeXemPh__MaLic__03F0984C" Association="CinemaManagementDBModel.FK__tbVeXemPh__MaLic__03F0984C">
+            <End Role="tbLichChieu" EntitySet="tbLichChieux" />
+            <End Role="tbVeXemPhim" EntitySet="tbVeXemPhims" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tbPhim">
+          <Key>
+            <PropertyRef Name="MaPhim" />
+          </Key>
+          <Property Name="MaPhim" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenPhim" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="TheLoai" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ThoiLuong" Type="Int32" />
+          <Property Name="DaoDien" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NgayKhoiChieu" Type="DateTime" Precision="0" />
+          <Property Name="Poster" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbLichChieux" Relationship="CinemaManagementDBModel.FK__tbLichChi__MaPhi__6FE99F9F" FromRole="tbPhim" ToRole="tbLichChieu" />
+        </EntityType>
+        <EntityType Name="tbPhongChieu">
+          <Key>
+            <PropertyRef Name="MaPhong" />
+          </Key>
+          <Property Name="MaPhong" Type="Int32" Nullable="false" />
+          <Property Name="LoaiPhong" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SoGhe" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tbLichChieux" Relationship="CinemaManagementDBModel.FK__tbLichChi__MaPho__70DDC3D8" FromRole="tbPhongChieu" ToRole="tbLichChieu" />
+        </EntityType>
+        <EntityType Name="tbLichChieu">
+          <Key>
+            <PropertyRef Name="MaLich" />
+          </Key>
+          <Property Name="MaLich" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaPhim" Type="Int32" />
+          <Property Name="MaPhong" Type="Int32" />
+          <Property Name="NgayChieu" Type="DateTime" Precision="0" />
+          <Property Name="GioChieu" Type="Time" Precision="7" />
+          <Property Name="GiaVe" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="tbPhim" Relationship="CinemaManagementDBModel.FK__tbLichChi__MaPhi__6FE99F9F" FromRole="tbLichChieu" ToRole="tbPhim" />
+          <NavigationProperty Name="tbPhongChieu" Relationship="CinemaManagementDBModel.FK__tbLichChi__MaPho__70DDC3D8" FromRole="tbLichChieu" ToRole="tbPhongChieu" />
+          <NavigationProperty Name="tbVeXemPhims" Relationship="CinemaManagementDBModel.FK__tbVeXemPh__MaLic__03F0984C" FromRole="tbLichChieu" ToRole="tbVeXemPhim" />
+        </EntityType>
+        <Association Name="FK__tbLichChi__MaPhi__6FE99F9F">
+          <End Type="CinemaManagementDBModel.tbPhim" Role="tbPhim" Multiplicity="0..1" />
+          <End Type="CinemaManagementDBModel.tbLichChieu" Role="tbLichChieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbPhim">
+              <PropertyRef Name="MaPhim" />
+            </Principal>
+            <Dependent Role="tbLichChieu">
+              <PropertyRef Name="MaPhim" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbLichChi__MaPho__70DDC3D8">
+          <End Type="CinemaManagementDBModel.tbPhongChieu" Role="tbPhongChieu" Multiplicity="0..1" />
+          <End Type="CinemaManagementDBModel.tbLichChieu" Role="tbLichChieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbPhongChieu">
+              <PropertyRef Name="MaPhong" />
+            </Principal>
+            <Dependent Role="tbLichChieu">
+              <PropertyRef Name="MaPhong" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tbVeXemPhim">
+          <Key>
+            <PropertyRef Name="MaVe" />
+          </Key>
+          <Property Name="MaVe" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaLich" Type="Int32" />
+          <Property Name="ViTriGhe" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="NgayBan" Type="DateTime" Precision="3" />
+          <Property Name="TongTien" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="tbLichChieu" Relationship="CinemaManagementDBModel.FK__tbVeXemPh__MaLic__03F0984C" FromRole="tbVeXemPhim" ToRole="tbLichChieu" />
+        </EntityType>
+        <Association Name="FK__tbVeXemPh__MaLic__03F0984C">
+          <End Type="CinemaManagementDBModel.tbLichChieu" Role="tbLichChieu" Multiplicity="0..1" />
+          <End Type="CinemaManagementDBModel.tbVeXemPhim" Role="tbVeXemPhim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbLichChieu">
+              <PropertyRef Name="MaLich" />
+            </Principal>
+            <Dependent Role="tbVeXemPhim">
+              <PropertyRef Name="MaLich" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CinemaManagementDBModelStoreContainer" CdmEntityContainer="CinemaManagementDBEntities">
+          <EntitySetMapping Name="tbNguoiDungs">
+            <EntityTypeMapping TypeName="CinemaManagementDBModel.tbNguoiDung">
+              <MappingFragment StoreEntitySet="tbNguoiDung">
+                <ScalarProperty Name="MaND" ColumnName="MaND" />
+                <ScalarProperty Name="HoTen" ColumnName="HoTen" />
+                <ScalarProperty Name="SDT" ColumnName="SDT" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Passwd" ColumnName="Passwd" />
+                <ScalarProperty Name="Roles" ColumnName="Roles" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbPhims">
+            <EntityTypeMapping TypeName="CinemaManagementDBModel.tbPhim">
+              <MappingFragment StoreEntitySet="tbPhim">
+                <ScalarProperty Name="Poster" ColumnName="Poster" />
+                <ScalarProperty Name="NgayKhoiChieu" ColumnName="NgayKhoiChieu" />
+                <ScalarProperty Name="DaoDien" ColumnName="DaoDien" />
+                <ScalarProperty Name="ThoiLuong" ColumnName="ThoiLuong" />
+                <ScalarProperty Name="TheLoai" ColumnName="TheLoai" />
+                <ScalarProperty Name="TenPhim" ColumnName="TenPhim" />
+                <ScalarProperty Name="MaPhim" ColumnName="MaPhim" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbPhongChieux">
+            <EntityTypeMapping TypeName="CinemaManagementDBModel.tbPhongChieu">
+              <MappingFragment StoreEntitySet="tbPhongChieu">
+                <ScalarProperty Name="SoGhe" ColumnName="SoGhe" />
+                <ScalarProperty Name="LoaiPhong" ColumnName="LoaiPhong" />
+                <ScalarProperty Name="MaPhong" ColumnName="MaPhong" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbLichChieux">
+            <EntityTypeMapping TypeName="CinemaManagementDBModel.tbLichChieu">
+              <MappingFragment StoreEntitySet="tbLichChieu">
+                <ScalarProperty Name="GiaVe" ColumnName="GiaVe" />
+                <ScalarProperty Name="GioChieu" ColumnName="GioChieu" />
+                <ScalarProperty Name="NgayChieu" ColumnName="NgayChieu" />
+                <ScalarProperty Name="MaPhong" ColumnName="MaPhong" />
+                <ScalarProperty Name="MaPhim" ColumnName="MaPhim" />
+                <ScalarProperty Name="MaLich" ColumnName="MaLich" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbVeXemPhims">
+            <EntityTypeMapping TypeName="CinemaManagementDBModel.tbVeXemPhim">
+              <MappingFragment StoreEntitySet="tbVeXemPhim">
+                <ScalarProperty Name="TongTien" ColumnName="TongTien" />
+                <ScalarProperty Name="NgayBan" ColumnName="NgayBan" />
+                <ScalarProperty Name="ViTriGhe" ColumnName="ViTriGhe" />
+                <ScalarProperty Name="MaLich" ColumnName="MaLich" />
+                <ScalarProperty Name="MaVe" ColumnName="MaVe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
